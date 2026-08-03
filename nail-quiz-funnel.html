@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Are You Ready to Teach Like a Pro? — Free Assessment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1c1310;
+    --cream:#faf5ee;
+    --card:#fffdfb;
+    --wine:#7c1f3d;
+    --wine-deep:#57152c;
+    --wine-light:#a63757;
+    --gold:#c9a15c;
+    --gold-soft:#e4cfa0;
+    --blush:#f2ddd8;
+    --muted:#8a7d73;
+    --text:#2b2019;
+    --ok:#4c7a5a;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%;}
+  body{
+    font-family:'Work Sans', sans-serif;
+    background:
+      radial-gradient(circle at 20% -10%, #3a1f27 0%, transparent 45%),
+      radial-gradient(circle at 90% 110%, #3a1f27 0%, transparent 45%),
+      var(--ink);
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:28px 16px;
+    color:var(--text);
+  }
+  .stage{ width:100%; max-width:600px; }
+  .brand{
+    text-align:center; color:var(--gold-soft); font-size:11px; letter-spacing:.22em;
+    text-transform:uppercase; margin-bottom:18px; opacity:.85; font-weight:600;
+  }
+  .card{
+    background:var(--card); border-radius:18px;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,.55), 0 0 0 1px rgba(201,161,92,.15);
+    overflow:hidden; position:relative; min-height:560px; display:flex; flex-direction:column;
+  }
+  .card::before{
+    content:""; position:absolute; top:0; left:0; right:0; height:5px;
+    background:linear-gradient(90deg, var(--wine), var(--gold));
+  }
+  .progress-wrap{ padding:26px 32px 0 32px; }
+  .progress-label{ display:flex; justify-content:space-between; font-size:12px; color:var(--muted); margin-bottom:8px; font-weight:600; }
+  .progress-track{ height:6px; background:var(--blush); border-radius:99px; overflow:hidden; }
+  .progress-fill{ height:100%; width:0%; border-radius:99px; background:linear-gradient(90deg, var(--wine), var(--wine-light)); transition:width .5s cubic-bezier(.4,0,.2,1); }
+  .steps{ flex:1; position:relative; padding:30px 32px 32px 32px; display:flex; flex-direction:column; }
+  .step{ display:none; flex-direction:column; flex:1; animation:fadeSlide .45s ease; }
+  .step.active{ display:flex; }
+  @keyframes fadeSlide{ from{ opacity:0; transform:translateY(10px);} to{ opacity:1; transform:translateY(0);} }
+
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:6px; font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--wine); font-weight:700; background:var(--blush); padding:6px 12px; border-radius:99px; width:fit-content; margin-bottom:18px;
+  }
+  h1{ font-family:'Fraunces', serif; font-weight:600; font-size:clamp(24px,5vw,30px); line-height:1.18; letter-spacing:-.01em; margin-bottom:14px; }
+  .sub{ color:var(--muted); font-size:15px; line-height:1.55; margin-bottom:24px; max-width:46ch; }
+  .hero-strip{ display:flex; gap:8px; margin-bottom:24px; }
+  .hero-strip img{ width:54px; height:54px; object-fit:cover; border-radius:10px; box-shadow:0 6px 14px rgba(0,0,0,.15); background:var(--blush); }
+  .trust{ font-size:13px; color:var(--muted); margin-top:auto; padding-top:16px; display:flex; align-items:center; gap:6px; }
+  .trust b{ color:var(--text); }
+
+  .btn{
+    appearance:none; border:none; cursor:pointer;
+    background:linear-gradient(180deg, var(--wine-light), var(--wine));
+    color:#fff8f2; font-family:'Work Sans', sans-serif; font-weight:700; font-size:16px;
+    padding:16px 22px; border-radius:12px; display:flex; align-items:center; justify-content:center; gap:8px;
+    box-shadow:0 14px 24px -10px rgba(124,31,61,.55); transition:transform .15s ease, box-shadow .15s ease; width:100%;
+  }
+  .btn:hover{ transform:translateY(-2px); box-shadow:0 18px 30px -10px rgba(124,31,61,.6); }
+  .btn:active{ transform:translateY(0); }
+  .btn.ghost{
+    background:transparent; color:var(--wine); box-shadow:none; border:1.5px solid var(--blush); margin-top:12px;
+  }
+  .btn.ghost:hover{ background:var(--blush); transform:none; }
+  .btn:disabled{ opacity:.45; cursor:not-allowed; transform:none; box-shadow:none; }
+
+  .q-eyebrow{ font-size:11.5px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); margin-bottom:8px; }
+  .q-title{ font-family:'Fraunces', serif; font-weight:600; font-size:clamp(19px,4.2vw,23px); line-height:1.3; margin-bottom:20px; }
+
+  .options{ display:flex; flex-direction:column; gap:10px; }
+  .option{
+    text-align:left; background:var(--cream); border:1.5px solid transparent; border-radius:12px;
+    padding:15px 16px; font-size:15px; font-weight:500; cursor:pointer;
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    transition:border-color .15s ease, background .15s ease, transform .1s ease;
+  }
+  .option:hover{ border-color:var(--gold); background:#fbf1e4; }
+  .option.selected{ border-color:var(--wine); background:var(--blush); }
+  .option .dot{ width:18px; height:18px; border-radius:50%; border:2px solid var(--muted); flex-shrink:0; position:relative; }
+  .option.selected .dot{ border-color:var(--wine); }
+  .option.selected .dot::after{ content:""; position:absolute; inset:3px; border-radius:50%; background:var(--wine); }
+
+  /* image option cards */
+  .img-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .img-card{
+    cursor:pointer; border-radius:12px; overflow:hidden; position:relative; border:2px solid transparent;
+    background:var(--cream); transition:border-color .15s ease, transform .1s ease;
+  }
+  .img-card:hover{ border-color:var(--gold); }
+  .img-card.selected{ border-color:var(--wine); }
+  .img-card img{ width:100%; height:88px; object-fit:cover; display:block; background:var(--blush); }
+  .img-card .cap{
+    font-size:12.5px; font-weight:600; padding:8px 10px; display:flex; align-items:center; justify-content:space-between;
+  }
+  .img-card .check{ width:16px; height:16px; border-radius:50%; border:2px solid var(--muted); flex-shrink:0; }
+  .img-card.selected .check{ border-color:var(--wine); background:var(--wine); }
+
+  /* icon option cards */
+  .icon-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .icon-card{
+    cursor:pointer; text-align:left; background:var(--cream); border:1.5px solid transparent; border-radius:12px;
+    padding:16px 14px; display:flex; flex-direction:column; gap:10px; transition:border-color .15s ease, background .15s ease;
+  }
+  .icon-card:hover{ border-color:var(--gold); background:#fbf1e4; }
+  .icon-card.selected{ border-color:var(--wine); background:var(--blush); }
+  .icon-card svg{ width:26px; height:26px; color:var(--wine); }
+  .icon-card .label{ font-size:14px; font-weight:600; }
+
+  /* illustrated before/after cards */
+  .illus-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .illus-card{
+    cursor:pointer; background:var(--cream); border:1.5px solid transparent; border-radius:12px; padding:18px 12px;
+    text-align:center; transition:border-color .15s ease, background .15s ease;
+  }
+  .illus-card:hover{ border-color:var(--gold); }
+  .illus-card.selected{ border-color:var(--wine); background:var(--blush); }
+  .illus-card svg{ width:56px; height:56px; margin-bottom:10px; }
+  .illus-card .label{ font-size:13.5px; font-weight:600; line-height:1.4; }
+
+  .micro-note{ margin-top:16px; font-size:13.5px; color:var(--wine); background:var(--blush); padding:10px 14px; border-radius:10px; display:none; line-height:1.5; }
+  .micro-note.show{ display:block; animation:fadeSlide .35s ease; }
+
+  /* slider */
+  .slider-wrap{ margin-top:6px; }
+  .slider-value{
+    font-family:'Fraunces', serif; font-size:40px; font-weight:700; color:var(--wine); text-align:center; margin-bottom:4px;
+  }
+  .slider-desc{ text-align:center; font-size:13.5px; color:var(--muted); margin-bottom:22px; min-height:18px; }
+  input[type=range]{
+    -webkit-appearance:none; width:100%; height:8px; border-radius:99px; background:var(--blush); outline:none;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none; width:26px; height:26px; border-radius:50%;
+    background:linear-gradient(180deg,var(--wine-light),var(--wine)); border:3px solid #fff;
+    box-shadow:0 4px 10px rgba(124,31,61,.4); cursor:pointer; margin-top:-9px;
+  }
+  input[type=range]::-webkit-slider-runnable-track{ height:8px; border-radius:99px; background:var(--blush); }
+  .slider-labels{ display:flex; justify-content:space-between; font-size:11.5px; color:var(--muted); margin-top:8px; }
+
+  /* interstitial */
+  .interstitial{ align-items:center; text-align:center; justify-content:center; gap:6px; }
+  .interstitial .stars{ color:var(--gold); font-size:18px; margin-bottom:6px; letter-spacing:2px; }
+  .interstitial h2{ font-family:'Fraunces', serif; font-size:21px; font-weight:600; margin-bottom:10px; }
+  .interstitial p{ color:var(--muted); font-size:14px; line-height:1.55; max-width:40ch; margin:0 auto 20px auto; }
+  .testi-row{ display:flex; gap:8px; justify-content:center; margin-bottom:24px; flex-wrap:wrap; }
+  .testi-row img{ width:150px; border-radius:10px; box-shadow:0 8px 18px rgba(0,0,0,.15); }
+
+  .back-link{ margin-top:14px; font-size:13px; color:var(--muted); cursor:pointer; text-align:center; }
+  .back-link:hover{ color:var(--text); }
+
+  /* Loading */
+  .loading{ align-items:center; justify-content:center; text-align:center; gap:18px; }
+  .spinner{ width:64px; height:64px; border-radius:50%; border:5px solid var(--blush); border-top-color:var(--wine); animation:spin 1s linear infinite; }
+  @keyframes spin{ to{ transform:rotate(360deg);} }
+  .loading-text{ font-family:'Fraunces', serif; font-size:19px; font-weight:600; min-height:26px; }
+  .loading-bar-track{ width:80%; height:6px; background:var(--blush); border-radius:99px; overflow:hidden; margin-top:6px; }
+  .loading-bar-fill{ height:100%; width:0%; background:linear-gradient(90deg,var(--wine),var(--gold)); border-radius:99px; transition:width 2.8s linear; }
+
+  /* Result */
+  .result-badge{ display:flex; align-items:center; gap:8px; font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--ok); margin-bottom:12px; }
+  .result-badge svg{ width:16px; height:16px; }
+  #resultHeadline{ font-family:'Fraunces', serif; font-weight:600; font-size:clamp(21px,4.4vw,25px); line-height:1.25; margin-bottom:8px; }
+  .result-sub{ color:var(--muted); font-size:14px; margin-bottom:6px; line-height:1.5; }
+  #resultPick{ font-size:13.5px; color:var(--wine); font-weight:600; margin-bottom:16px; }
+  .bundle-grid{ display:grid; grid-template-columns:repeat(6,1fr); gap:6px; margin-bottom:18px; }
+  .bundle-grid img{ width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:8px; background:var(--blush); box-shadow:0 4px 10px rgba(0,0,0,.12); }
+  .price-box{ background:var(--ink); color:var(--cream); border-radius:14px; padding:20px; margin-bottom:16px; position:relative; overflow:hidden; }
+  .price-box::after{ content:""; position:absolute; inset:0; background:radial-gradient(circle at 100% 0%, rgba(201,161,92,.25), transparent 60%); }
+  .price-row{ display:flex; align-items:baseline; gap:10px; position:relative; }
+  .old-price{ text-decoration:line-through; color:#a89b90; font-size:15px; }
+  .new-price{ font-family:'Fraunces', serif; font-size:34px; font-weight:700; color:var(--gold-soft); }
+  .price-note{ font-size:12.5px; color:#c9beb5; margin-top:4px; position:relative; }
+  .timer-row{ display:flex; align-items:center; gap:8px; margin-top:12px; position:relative; font-size:13px; color:var(--gold-soft); font-weight:600; }
+  .timer{ font-variant-numeric:tabular-nums; background:rgba(255,255,255,.08); padding:4px 10px; border-radius:8px; font-family:'Fraunces',serif; }
+  .guarantee{ display:flex; gap:10px; align-items:flex-start; font-size:13px; color:var(--muted); margin-bottom:18px; line-height:1.5; }
+  .guarantee svg{ width:20px; height:20px; flex-shrink:0; margin-top:1px; color:var(--wine); }
+  .final-cta{ margin-top:auto; }
+  .final-note{ text-align:center; font-size:12px; color:var(--muted); margin-top:10px; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="brand">Daiane Oliveira Studio · Nail Educator Method</div>
+  <div class="card">
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-label"><span id="progressLabel">Question 1 of 9</span><span id="progressPct">11%</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+
+    <div class="steps">
+
+      <!-- STEP 0: WELCOME -->
+      <div class="step active" data-step="0">
+        <span class="eyebrow">★ 90-second assessment</span>
+        <h1>Are You Ready to Teach Nail Classes Like a True Professional?</h1>
+        <p class="sub">Answer a few quick questions about where you are and what's holding you back — we'll match you with the exact manual system your students are waiting for.</p>
+        <div class="hero-strip">
+          <img src="https://daianeoliveira.com/wp-content/uploads/elementor/thumbs/fibra-e1778323675776-rn78fb0t6h2mszqvzkkyoztep3japn5inmmybujxxc.webp" onerror="this.style.display='none'">
+          <img src="https://daianeoliveira.com/wp-content/uploads/elementor/thumbs/tips-rikot0f09f8rusq0e1vwvjns6wqdlj7e3gjivg2q2o.webp" onerror="this.style.display='none'">
+          <img src="https://daianeoliveira.com/wp-content/uploads/elementor/thumbs/molde-f1-rikostu4xkzrlizkgh1iw3bk17mt3nh9qjz4iicha8.webp" onerror="this.style.display='none'">
+          <img src="https://daianeoliveira.com/wp-content/uploads/elementor/thumbs/soft-gel-rikosyjbvr677ksqp12nqk4v04zn64zxf78jww5if4.webp" onerror="this.style.display='none'">
+          <img src="https://daianeoliveira.com/wp-content/uploads/elementor/thumbs/molde-russo-rikosurz4f11x4y7azg5gl30mli6bcl02omlzsb340.webp" onerror="this.style.display='none'">
+        </div>
+        <button class="btn" onclick="goTo(1)">Start My Free Assessment →</button>
+        <div class="trust">⭐⭐⭐⭐⭐ &nbsp;Trusted by <b>hundreds of nail professionals</b> worldwide</div>
+      </div>
+
+      <!-- STEP 1: Q1 career stage -->
+      <div class="step" data-step="1" data-qindex="1">
+        <div class="q-eyebrow">About you</div>
+        <div class="q-title">Where are you in your nail career right now?</div>
+        <div class="options">
+          <button class="option" data-group="q1" data-answer="starting">Just starting out — building my skills<span class="dot"></span></button>
+          <button class="option" data-group="q1" data-answer="working">Working nail tech, want to start teaching<span class="dot"></span></button>
+          <button class="option" data-group="q1" data-answer="unprofessional">Already teaching, but my materials feel unprofessional<span class="dot"></span></button>
+          <button class="option" data-group="q1" data-answer="scaling">Experienced instructor, ready to scale my courses<span class="dot"></span></button>
+        </div>
+      </div>
+
+      <!-- STEP 2: Q2 technique focus (image cards) -->
+      <div class="step" data-step="2" data-qindex="2">
+        <div class="q-eyebrow">Your specialty</div>
+        <div class="q-title">Which technique do you want your classes to shine in most?</div>
+        <div class="img-grid">
+          <div class="img-card" data-group="q2" data-answer="fiberglass">
+            <img src="https://daianeoliveira.com/wp-content/uploads/elementor/thumbs/fibra-e1778323675776-rn78fb0t6h2mszqvzkkyoztep3japn5inmmybujxxc.webp" onerror="this.style.display='none'">
+            <div class="cap">Fiberglass<span class="check"></span></div>
+          </div>
+          <div class="img-card" data-group="q2" data-answer="tips">
+            <img src="https://daianeoliveira.com/wp-content/uploads/elementor/thumbs/tips-rikot0f09f8rusq0e1vwvjns6wqdlj7e3gjivg2q2o.webp" onerror="this.style.display='none'">
+            <div class="cap">Gel on Tips<span class="check"></span></div>
+          </div>
+          <div class="img-card" data-group="q2" data-answer="f1">
+            <img src="https://daianeoliveira.com/wp-content/uploads/elementor/thumbs/molde-f1-rikostu4xkzrlizkgh1iw3bk17mt3nh9qjz4iicha8.webp" onerror="this.style.display='none'">
+            <div class="cap">F1 Dual-Forms<span class="check"></span></div>
+          </div>
+          <div class="img-card" data-group="q2" data-answer="softgel">
+            <img src="https://daianeoliveira.com/wp-content/uploads/elementor/thumbs/soft-gel-rikosyjbvr677ksqp12nqk4v04zn64zxf78jww5if4.webp" onerror="this.style.display='none'">
+            <div class="cap">Soft Gel<span class="check"></span></div>
+          </div>
+          <div class="img-card" data-group="q2" data-answer="russian">
+            <img src="https://daianeoliveira.com/wp-content/uploads/elementor/thumbs/molde-russo-rikosurz4f11x4y7azg5gl30mli6bcl02omlzsb340.webp" onerror="this.style.display='none'">
+            <div class="cap">Russian Forms<span class="check"></span></div>
+          </div>
+          <div class="img-card" data-group="q2" data-answer="realistic">
+            <img src="https://daianeoliveira.com/wp-content/uploads/elementor/thumbs/postica-realista-rikoswnni33mkcvh009elklxtd8wqqsgqxxkyc8ark.webp" onerror="this.style.display='none'">
+            <div class="cap">Realistic Press-On<span class="check"></span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3: Q3 struggle -->
+      <div class="step" data-step="3" data-qindex="3">
+        <div class="q-eyebrow">Your reality today</div>
+        <div class="q-title">What's your biggest struggle when preparing classes or content for students?</div>
+        <div class="options">
+          <button class="option" data-group="q3" data-answer="time">I never have enough time to design materials<span class="dot"></span></button>
+          <button class="option" data-group="q3" data-answer="amateur">My handouts look amateur or inconsistent<span class="dot"></span></button>
+          <button class="option" data-group="q3" data-answer="skills">I have zero design skills<span class="dot"></span></button>
+          <button class="option" data-group="q3" data-answer="credibility">Students don't take me seriously without real materials<span class="dot"></span></button>
+        </div>
+        <div class="micro-note" id="note-q3">You're not alone — this is one of the top challenges nail educators tell us about. The good news: it's completely fixable in the next few minutes.</div>
+      </div>
+
+      <!-- STEP 4: interstitial social proof -->
+      <div class="step interstitial" data-step="4">
+        <div class="stars">★★★★★</div>
+        <h2>You're in good company</h2>
+        <p>Nail professionals in multiple countries already use these manuals to run more organized, more professional classes.</p>
+        <div class="testi-row">
+          <img src="https://daianeoliveira.com/wp-content/uploads/jessicasantos_comment_en_optimized.webp" onerror="this.style.display='none'">
+          <img src="https://daianeoliveira.com/wp-content/uploads/samillycostanails_comment_en_optimized.webp" onerror="this.style.display='none'">
+          <img src="https://daianeoliveira.com/wp-content/uploads/mayrasallino_comment_en_optimized.webp" onerror="this.style.display='none'">
+        </div>
+        <button class="btn" onclick="goTo(5)">Continue My Assessment →</button>
+      </div>
+
+      <!-- STEP 5: Q4 illustrated before/after -->
+      <div class="step" data-step="5" data-qindex="4">
+        <div class="q-eyebrow">A quick gut check</div>
+        <div class="q-title">Which one looks more like your current class materials?</div>
+        <div class="illus-grid">
+          <div class="illus-card" data-group="q4" data-answer="messy">
+            <svg viewBox="0 0 64 64" fill="none"><rect x="10" y="8" width="36" height="46" rx="3" stroke="#a63757" stroke-width="2.5" transform="rotate(-6 28 31)"/><path d="M18 22l16 4M17 30l14 3M18 38l12 4" stroke="#a63757" stroke-width="2" stroke-linecap="round" transform="rotate(-6 28 31)"/><path d="M46 46l8 8M46 54l8-8" stroke="#c9a15c" stroke-width="2.5" stroke-linecap="round"/></svg>
+            <div class="label">Handwritten & improvised — I wing it every class</div>
+          </div>
+          <div class="illus-card" data-group="q4" data-answer="polished">
+            <svg viewBox="0 0 64 64" fill="none"><rect x="14" y="10" width="30" height="40" rx="3" stroke="#7c1f3d" stroke-width="2.5"/><rect x="20" y="18" width="18" height="3" rx="1.5" fill="#c9a15c"/><rect x="20" y="26" width="18" height="3" rx="1.5" fill="#f2ddd8"/><rect x="20" y="34" width="12" height="3" rx="1.5" fill="#f2ddd8"/><circle cx="46" cy="46" r="9" stroke="#7c1f3d" stroke-width="2.5"/><path d="M42.5 46l2.5 2.5 5-5" stroke="#7c1f3d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div class="label">Clean, branded and organized — looks like a real course</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 6: Q5 how creating today -->
+      <div class="step" data-step="6" data-qindex="5">
+        <div class="q-eyebrow">Be honest</div>
+        <div class="q-title">How do you currently create your class materials?</div>
+        <div class="options">
+          <button class="option" data-group="q5" data-answer="handwritten">Handwritten notes or printouts from Google<span class="dot"></span></button>
+          <button class="option" data-group="q5" data-answer="free">Old free templates I found online<span class="dot"></span></button>
+          <button class="option" data-group="q5" data-answer="designer">I pay a designer every single time — expensive!<span class="dot"></span></button>
+          <button class="option" data-group="q5" data-answer="none">I don't have any structured material yet<span class="dot"></span></button>
+        </div>
+      </div>
+
+      <!-- STEP 7: Q6 teaching volume -->
+      <div class="step" data-step="7" data-qindex="6">
+        <div class="q-eyebrow">Your business today</div>
+        <div class="q-title">How many students do you teach (or plan to teach) per month?</div>
+        <div class="options">
+          <button class="option" data-group="q6" data-answer="1-5">1 to 5 students<span class="dot"></span></button>
+          <button class="option" data-group="q6" data-answer="6-15">6 to 15 students<span class="dot"></span></button>
+          <button class="option" data-group="q6" data-answer="16-30">16 to 30 students<span class="dot"></span></button>
+          <button class="option" data-group="q6" data-answer="30+">30+ students<span class="dot"></span></button>
+        </div>
+      </div>
+
+      <!-- STEP 8: Q7 confidence slider -->
+      <div class="step" data-step="8" data-qindex="7">
+        <div class="q-eyebrow">One more gut check</div>
+        <div class="q-title">On a scale of 1–10, how confident do you feel charging premium prices for your classes today?</div>
+        <div class="slider-wrap">
+          <div class="slider-value" id="sliderValue">5</div>
+          <div class="slider-desc" id="sliderDesc">Somewhat confident</div>
+          <input type="range" min="1" max="10" value="5" id="confidenceSlider">
+          <div class="slider-labels"><span>Not confident</span><span>Extremely confident</span></div>
+        </div>
+        <button class="btn" style="margin-top:24px;" onclick="answers.q7=document.getElementById('confidenceSlider').value; goTo(9);">Continue →</button>
+      </div>
+
+      <!-- STEP 9: Q8 desired outcome (icon cards) -->
+      <div class="step" data-step="9" data-qindex="8">
+        <div class="q-eyebrow">What matters most</div>
+        <div class="q-title">If your materials were 100% professional tomorrow, what would matter most to you?</div>
+        <div class="icon-grid">
+          <div class="icon-card" data-group="q8" data-answer="charge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+            <div class="label">Finally charge premium prices</div>
+          </div>
+          <div class="icon-card" data-group="q8" data-answer="professional">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 6 6 .9-4.5 4.3 1 6.3L12 16.5 6.5 19.5l1-6.3L3 8.9 9 8z"/></svg>
+            <div class="label">Look 100% professional to students</div>
+          </div>
+          <div class="icon-card" data-group="q8" data-answer="save-time">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+            <div class="label">Save hours of design work</div>
+          </div>
+          <div class="icon-card" data-group="q8" data-answer="all">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg>
+            <div class="label">Honestly... all of the above!</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 10: Q9 price anchor -->
+      <div class="step" data-step="10" data-qindex="9">
+        <div class="q-eyebrow">Last question</div>
+        <div class="q-title">Professional course materials like these usually cost <strong>$200–$580</strong> when custom made. If you could get the complete system for a fraction of that today — would you take it?</div>
+        <div class="options">
+          <button class="option" data-group="q9" data-answer="yes">Yes — show me the offer!<span class="dot"></span></button>
+          <button class="option" data-group="q9" data-answer="maybe">Depends on the price<span class="dot"></span></button>
+        </div>
+      </div>
+
+      <!-- STEP 11: LOADING -->
+      <div class="step loading" data-step="11">
+        <div class="spinner"></div>
+        <div class="loading-text" id="loadingText">Analyzing your answers...</div>
+        <div class="loading-bar-track"><div class="loading-bar-fill" id="loadingFill"></div></div>
+      </div>
+
+      <!-- STEP 12: RESULT -->
+      <div class="step" data-step="12">
+        <div class="result-badge">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Assessment complete — you're a match
+        </div>
+        <div id="resultHeadline">Your materials are about to catch up with your talent.</div>
+        <p class="result-sub">Based on your answers, the <strong>Complete Nail Educator Bundle</strong> is exactly what your business needs right now — 6 done-for-you manuals, 100% editable, ready in under 5 minutes.</p>
+        <div id="resultPick"></div>
+
+        <div class="bundle-grid">
+          <img src="https://daianeoliveira.com/wp-content/uploads/elementor/thumbs/fibra-e1778323675776-rn78fb0t6h2mszqvzkkyoztep3japn5inmmybujxxc.webp" onerror="this.style.display='none'">
+          <img src="https://daianeoliveira.com/wp-content/uploads/elementor/thumbs/tips-rikot0f09f8rusq0e1vwvjns6wqdlj7e3gjivg2q2o.webp" onerror="this.style.display='none'">
+          <img src="https://daianeoliveira.com/wp-content/uploads/elementor/thumbs/molde-f1-rikostu4xkzrlizkgh1iw3bk17mt3nh9qjz4iicha8.webp" onerror="this.style.display='none'">
+          <img src="https://daianeoliveira.com/wp-content/uploads/elementor/thumbs/soft-gel-rikosyjbvr677ksqp12nqk4v04zn64zxf78jww5if4.webp" onerror="this.style.display='none'">
+          <img src="https://daianeoliveira.com/wp-content/uploads/elementor/thumbs/molde-russo-rikosurz4f11x4y7azg5gl30mli6bcl02omlzsb340.webp" onerror="this.style.display='none'">
+          <img src="https://daianeoliveira.com/wp-content/uploads/elementor/thumbs/postica-realista-rikoswnni33mkcvh009elklxtd8wqqsgqxxkyc8ark.webp" onerror="this.style.display='none'">
+        </div>
+
+        <div class="price-box">
+          <div class="price-row">
+            <span class="old-price">$580</span>
+            <span class="new-price">$39.90</span>
+          </div>
+          <div class="price-note">6 manuals + 4 free bonuses · one-time payment · lifetime access</div>
+          <div class="timer-row">⏳ Your assessment price expires in <span class="timer" id="timer">15:00</span></div>
+        </div>
+
+        <div class="guarantee">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 2l8 4v6c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6l8-4z" stroke="currentColor" stroke-width="1.8"/></svg>
+          <span><strong>7-day guarantee.</strong> Try every manual at your own pace. Not a fit? Full refund, no complications.</span>
+        </div>
+
+        <div class="final-cta">
+          <a class="btn" href="https://pay.hotmart.com/V104434534H?checkoutMode=10&utm_source=quiz&utm_medium=funnel&utm_campaign=nail_educator_assessment&bid=1785790276659" target="_blank" style="text-decoration:none;">Get My Bundle Now →</a>
+          <div class="final-note">Instant delivery to your email · Editable in Canva · No subscription</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  const totalQuestions = 9;
+  const answers = {};
+
+  function updateProgress(step){
+    const wrap = document.getElementById('progressWrap');
+    const el = document.querySelector('.step[data-step="'+step+'"]');
+    const qi = el ? el.dataset.qindex : null;
+    if(!qi){
+      wrap.style.display = 'none';
+    } else {
+      wrap.style.display = 'block';
+      document.getElementById('progressLabel').textContent = 'Question ' + qi + ' of ' + totalQuestions;
+      const pct = Math.round((qi/totalQuestions)*100);
+      document.getElementById('progressPct').textContent = pct + '%';
+      document.getElementById('progressFill').style.width = pct + '%';
+    }
+  }
+
+  function goTo(step){
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.querySelector('.step[data-step="'+step+'"]').classList.add('active');
+    updateProgress(step);
+    if(step === 11){ runLoading(); }
+    if(step === 12){ personalizeResult(); startTimer(); }
+  }
+
+  document.querySelectorAll('.option, .img-card, .icon-card, .illus-card').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      const group = btn.dataset.group;
+      const stepEl = btn.closest('.step');
+      const stepNum = parseInt(stepEl.dataset.step);
+      stepEl.querySelectorAll('[data-group="'+group+'"]').forEach(o => o.classList.remove('selected'));
+      btn.classList.add('selected');
+      answers[group] = btn.dataset.answer;
+
+      const note = stepEl.querySelector('.micro-note');
+      if(note){ note.classList.add('show'); }
+
+      setTimeout(function(){
+        const nextMap = {1:2,2:3,3:4,5:6,6:7,7:8,9:10,10:11};
+        goTo(nextMap[stepNum]);
+      }, note ? 900 : 420);
+    });
+  });
+
+  const slider = document.getElementById('confidenceSlider');
+  const sliderDescs = {1:"Not confident at all",2:"Not confident at all",3:"A little unsure",4:"A little unsure",5:"Somewhat confident",6:"Somewhat confident",7:"Fairly confident",8:"Fairly confident",9:"Very confident",10:"Extremely confident"};
+  slider.addEventListener('input', function(){
+    document.getElementById('sliderValue').textContent = slider.value;
+    document.getElementById('sliderDesc').textContent = sliderDescs[slider.value];
+  });
+
+  function runLoading(){
+    const messages = ["Analyzing your answers...", "Matching your professional profile...", "Preparing your personalized result..."];
+    let i = 0;
+    document.getElementById('loadingText').textContent = messages[0];
+    document.getElementById('loadingFill').style.width = '0%';
+    requestAnimationFrame(function(){ document.getElementById('loadingFill').style.width = '100%'; });
+    const interval = setInterval(function(){
+      i++;
+      if(i < messages.length){ document.getElementById('loadingText').textContent = messages[i]; }
+    }, 900);
+    setTimeout(function(){ clearInterval(interval); goTo(12); }, 2800);
+  }
+
+  function personalizeResult(){
+    const map = {
+      starting: "You're starting at exactly the right moment — build your reputation with professional materials from day one.",
+      working: "You're ready to make the leap into teaching, backed by materials that look like you've been doing this for years.",
+      unprofessional: "It's time your materials finally matched the skill you already have.",
+      scaling: "You're ready to scale your courses with materials as polished as your technique."
+    };
+    const techniqueNames = {
+      fiberglass: "Fiberglass", tips: "Gel on Tips", f1: "F1 Dual-Forms",
+      softgel: "Soft Gel", russian: "Russian Forms", realistic: "Realistic Press-On"
+    };
+    document.getElementById('resultHeadline').textContent = map[answers.q1] || "Your materials are about to catch up with your talent.";
+    const tech = techniqueNames[answers.q2];
+    document.getElementById('resultPick').textContent = tech ? ("Your top pick: " + tech + " Manual — ready to teach in minutes, included in your bundle.") : "";
+  }
+
+  function startTimer(){
+    let total = 15*60;
+    const el = document.getElementById('timer');
+    if(el.dataset.started) return;
+    el.dataset.started = "1";
+    const iv = setInterval(function(){
+      total--;
+      if(total <= 0){ clearInterval(iv); total = 0; }
+      const m = String(Math.floor(total/60)).padStart(2,'0');
+      const s = String(total%60).padStart(2,'0');
+      el.textContent = m + ':' + s;
+    }, 1000);
+  }
+</script>
+</body>
+</html>
