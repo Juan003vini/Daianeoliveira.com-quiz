@@ -6,6 +6,28 @@
 <title>Are You Ready to Teach Like a Pro? — Free Assessment</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- META PIXEL (código oficial do Meta, com seu Pixel ID real) -->
+<script>
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1387666049994712');
+  fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1387666049994712&ev=PageView&noscript=1" /></noscript>
+
+<!-- UTMIFY (rastreamento de UTM para a Hotmart) -->
+<script
+  src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+  data-utmify-prevent-subids
+  async
+  defer
+></script>
+
 <style>
   :root{
     --ink:#1c1310;
@@ -398,6 +420,7 @@
         </div>
         <div id="resultHeadline">Your materials are about to catch up with your talent.</div>
         <p class="result-sub">Based on your answers, the <strong>Complete Nail Educator Bundle</strong> is exactly what your business needs right now — 6 done-for-you manuals, 100% editable, ready in under 5 minutes.</p>
+        <p class="result-sub" id="resultExtra"></p>
         <div id="resultPick"></div>
 
         <div class="bundle-grid">
@@ -452,12 +475,21 @@
     }
   }
 
+  // Fires a Meta custom event if the Pixel is loaded (see head comment to enable it).
+  // Safe to call even without the Pixel installed — it just does nothing.
+  function trackEvent(name, params){
+    if(typeof fbq === 'function'){ fbq('trackCustom', name, params || {}); }
+  }
+
   function goTo(step){
     document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
     document.querySelector('.step[data-step="'+step+'"]').classList.add('active');
     updateProgress(step);
-    if(step === 11){ runLoading(); }
-    if(step === 12){ personalizeResult(); startTimer(); }
+    if(step === 1){ trackEvent('QuizStarted'); }
+    if(step === 5){ trackEvent('QuizProgress', {milestone: '33%'}); }
+    if(step === 9){ trackEvent('QuizProgress', {milestone: '66%'}); }
+    if(step === 11){ runLoading(); trackEvent('QuizCompleted'); }
+    if(step === 12){ personalizeResult(); startTimer(); if(typeof fbq === 'function'){ fbq('track','Lead'); } }
   }
 
   document.querySelectorAll('.option, .img-card, .icon-card, .illus-card').forEach(function(btn){
@@ -500,32 +532,67 @@
   }
 
   function personalizeResult(){
-    const map = {
+    // Layer 1: headline driven by career stage (Q1)
+    const headlineMap = {
       starting: "You're starting at exactly the right moment — build your reputation with professional materials from day one.",
       working: "You're ready to make the leap into teaching, backed by materials that look like you've been doing this for years.",
       unprofessional: "It's time your materials finally matched the skill you already have.",
       scaling: "You're ready to scale your courses with materials as polished as your technique."
     };
+    document.getElementById('resultHeadline').textContent =
+      headlineMap[answers.q1] || "Your materials are about to catch up with your talent.";
+
+    // Layer 2: supporting line driven by confidence (Q7) + student volume (Q6)
+    const confidence = parseInt(answers.q7 || "5", 10);
+    let confidenceLine = "";
+    if(confidence <= 4){
+      confidenceLine = "We know charging what you're worth can feel hard today — that changes fast once your materials look like they belong to an award-winning instructor.";
+    } else if(confidence >= 7){
+      confidenceLine = "You already have the confidence — now it's time your materials matched it.";
+    } else {
+      confidenceLine = "You're close to charging what you're worth — the right materials are usually what tips the scale.";
+    }
+
+    const volumeMap = {
+      "1-5": "Perfect timing to start your teaching journey on the right foot, with a professional standard from class one.",
+      "6-15": "With a steady group of students, this system pays for itself within your very first class.",
+      "16-30": "At your current pace, this system saves you real hours every single month — hours you can reinvest in growing further.",
+      "30+": "With the volume of classes you already run, this system pays for itself with your very next class."
+    };
+    const volumeLine = volumeMap[answers.q6] || "";
+
+    document.getElementById('resultExtra').textContent = [confidenceLine, volumeLine].filter(Boolean).join(" ");
+
+    // Layer 3: recommended technique (Q2)
     const techniqueNames = {
       fiberglass: "Fiberglass", tips: "Gel on Tips", f1: "F1 Dual-Forms",
       softgel: "Soft Gel", russian: "Russian Forms", realistic: "Realistic Press-On"
     };
-    document.getElementById('resultHeadline').textContent = map[answers.q1] || "Your materials are about to catch up with your talent.";
     const tech = techniqueNames[answers.q2];
     document.getElementById('resultPick').textContent = tech ? ("Your top pick: " + tech + " Manual — ready to teach in minutes, included in your bundle.") : "";
   }
 
   function startTimer(){
-    let total = 15*60;
     const el = document.getElementById('timer');
     if(el.dataset.started) return;
     el.dataset.started = "1";
+
+    // Real countdown: the deadline is fixed the first time this visitor
+    // reaches the result screen and persists across reloads in the same
+    // session (sessionStorage), instead of restarting every time the page loads.
+    const STORAGE_KEY = 'nailQuizTimerEnd';
+    let endTime = parseInt(sessionStorage.getItem(STORAGE_KEY) || "0", 10);
+    if(!endTime || endTime < Date.now()){
+      endTime = Date.now() + 15*60*1000;
+      sessionStorage.setItem(STORAGE_KEY, String(endTime));
+    }
+
     const iv = setInterval(function(){
-      total--;
-      if(total <= 0){ clearInterval(iv); total = 0; }
-      const m = String(Math.floor(total/60)).padStart(2,'0');
-      const s = String(total%60).padStart(2,'0');
+      const remaining = Math.max(0, Math.round((endTime - Date.now())/1000));
+      const m = String(Math.floor(remaining/60)).padStart(2,'0');
+      const s = String(remaining%60).padStart(2,'0');
       el.textContent = m + ':' + s;
+      if(remaining <= 0){ clearInterval(iv); }
     }, 1000);
   }
 </script>
